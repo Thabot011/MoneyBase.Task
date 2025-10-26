@@ -2,6 +2,6 @@
 {
     public sealed class MoneyBaseSettings
     {
-        public int SessionQueueCapacity { get; set; }
+        public int PollMissThresholdSeconds { get; set; }
     }
 }

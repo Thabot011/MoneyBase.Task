@@ -15,11 +15,6 @@ namespace MoneyBase.Services
         {
             _repositoryManager = repositoryManager;
         }
-        public async Task AssignChatsToAgent(AgentDto agentDto, List<ChatDto> chatsDto, CancellationToken cancellationToken = default)
-        {
-            var chats = chatsDto.Adapt<IEnumerable<Chat>>();
-            var agent = agentDto.Adapt<Agent>();
-            await _repositoryManager.AgentRepository.AssignChatsToAgent(agent, chats);
-        }
+
     }
 }

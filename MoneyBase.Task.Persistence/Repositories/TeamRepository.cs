@@ -9,9 +9,14 @@ namespace MoneyBase.Persistence.Repositories
     {
         private readonly RepositoryDbContext _dbContext;
         public TeamRepository(RepositoryDbContext dbContext) => _dbContext = dbContext;
-        public async Task<Team> GetTeamByShiftAsync(ShiftType shift, CancellationToken cancellationToken = default)
+        public async Task<Team> GetTeamByShiftAsync(TimeOnly currentTime, CancellationToken cancellationToken = default)
         {
-            return await _dbContext.Teams.AsQueryable().Include(t => t.Shift).Include(t => t.Agents).ThenInclude(a => a.Chats).FirstOrDefaultAsync(t => t.Shift.ShiftType == shift, cancellationToken);
+            return await _dbContext.Teams.Where(t => t.Shift.StartTime <= currentTime || t.Shift.EndTime >= currentTime).Include(t => t.Shift).Include(t => t.Agents).ThenInclude(a => a.Chats).AsSplitQuery().AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<Team> GetTeamByShiftAsync(ShiftType shiftType, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Teams.Where(t => t.Shift.ShiftType == shiftType).Include(t => t.Shift).Include(t => t.Agents).ThenInclude(a => a.Chats).AsSplitQuery().AsNoTracking().FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

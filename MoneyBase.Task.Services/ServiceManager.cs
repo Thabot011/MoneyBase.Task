@@ -8,14 +8,18 @@ namespace MoneyBase.Services
         private readonly Lazy<IChatService> _lazyChatService;
         private readonly Lazy<IAgentService> _lazyAgentService;
         private readonly Lazy<ITeamService> _lazyTeamService;
+        private readonly Lazy<IChatAssignmentService> _lazyChatAssigmnmentService;
+
         public ServiceManager(IRepositoryManager repositoryManager)
         {
             _lazyAgentService = new Lazy<IAgentService>(() => new AgentService(repositoryManager));
             _lazyChatService = new Lazy<IChatService>(() => new ChatService(repositoryManager));
             _lazyTeamService = new Lazy<ITeamService>(() => new TeamService(repositoryManager));
+            _lazyChatAssigmnmentService = new Lazy<IChatAssignmentService>(() => new ChatAssignmentService(this));
         }
         public IChatService ChatService => _lazyChatService.Value;
         public IAgentService AgentService => _lazyAgentService.Value;
         public ITeamService TeamService => _lazyTeamService.Value;
+        public IChatAssignmentService ChatAssignmentService => _lazyChatAssigmnmentService.Value;
     }
 }

@@ -1,5 +1,14 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MoneyBase.BackGroundService.Jobs;
+using MoneyBase.Domain.RepositoryInterfaces;
+using MoneyBase.Persistence.Database;
+using MoneyBase.Persistence.Repositories;
+using MoneyBase.Services;
+using MoneyBase.Services.Abstractions;
+using MoneyBase.Shared;
 using Quartz;
 
 namespace MoneyBase.BackGroundService
@@ -16,7 +25,7 @@ namespace MoneyBase.BackGroundService
         {
             // Register job
             var jobKey = new JobKey("ChatPollingJob");
-            q.AddJob<ChatPollingJob>(opts => opts.WithIdentity(jobKey));
+            q.AddJob<ChatMonitorJob>(opts => opts.WithIdentity(jobKey));
 
             // Schedule it with a trigger (every 10 seconds)
             q.AddTrigger(opts => opts
@@ -24,7 +33,6 @@ namespace MoneyBase.BackGroundService
                 .WithIdentity("ChatPollingJob-trigger")
                 .WithSimpleSchedule(x => x.WithIntervalInSeconds(1).RepeatForever()));
 
-            q.UseDefaultThreadPool(tp => { tp.MaxConcurrency = 3; });
 
         });
 
@@ -33,6 +41,14 @@ namespace MoneyBase.BackGroundService
         {
             options.WaitForJobsToComplete = true;
         });
+
+        services.Configure<MoneyBaseSettings>(hostContext.Configuration.GetSection("MoneyBaseSettings"));
+
+        services.AddScoped<IServiceManager, ServiceManager>();
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
+        services.AddDbContext<RepositoryDbContext>(options =>
+options.UseSqlServer(hostContext.Configuration.GetConnectionString("Database")));
+
     })
     .RunConsoleAsync();
         }

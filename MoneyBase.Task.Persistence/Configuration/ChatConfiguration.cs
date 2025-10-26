@@ -13,9 +13,11 @@ namespace MoneyBase.Persistence.Configuration
             builder.Property(chat => chat.Id).ValueGeneratedOnAdd();
             builder.Property(chat => chat.Title).HasMaxLength(60).IsRequired();
             builder.Property(chat => chat.ChatStatus);
+            builder.Property(chat => chat.LastPollAt);
             builder.HasOne(chat => chat.Agent)
                 .WithMany(chat => chat.Chats)
-                .HasForeignKey(account => account.AgentId);
+                .HasForeignKey(account => account.AgentId).IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

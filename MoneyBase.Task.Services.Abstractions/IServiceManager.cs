@@ -5,5 +5,6 @@
         IChatService ChatService { get; }
         IAgentService AgentService { get; }
         ITeamService TeamService { get; }
+        IChatAssignmentService ChatAssignmentService { get; }
     }
 }

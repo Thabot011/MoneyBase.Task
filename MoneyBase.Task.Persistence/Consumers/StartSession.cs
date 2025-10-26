@@ -1,7 +1,5 @@
 ﻿namespace MoneyBase.Persistence.Consumers
 {
-    public class StartSession
-    {
-
-    }
+    public record StartSessionCommand(Guid ChatId);
+    public record StartSessionResult(Guid ChatId, bool IsAssigned);
 }

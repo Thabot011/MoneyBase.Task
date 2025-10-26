@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MoneyBase.Task.Persistence\MoneyBase.Persistence.csproj" />
     <ProjectReference Include="..\MoneyBase.Task.Services.Abstractions\MoneyBase.Services.Abstractions.csproj" />
   </ItemGroup>
 

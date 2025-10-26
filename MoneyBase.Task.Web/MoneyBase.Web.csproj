@@ -9,11 +9,23 @@
   <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.5" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MoneyBase.Shared\MoneyBase.Shared.csproj" />
+    <ProjectReference Include="..\MoneyBase.Task.Persistence\MoneyBase.Persistence.csproj" />
     <ProjectReference Include="..\MoneyBase.Task.Presentation\MoneyBase.Presentation.csproj" />
+    <ProjectReference Include="..\MoneyBase.Task.Services\MoneyBase.Services.csproj" />
   </ItemGroup>
 
 </Project>

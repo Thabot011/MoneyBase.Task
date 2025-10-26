@@ -12,24 +12,38 @@ namespace MoneyBase.Services
 
         public ChatService(IRepositoryManager repositoryManager) => _repositoryManager = repositoryManager;
 
-        public async Task AddChatAsync(AddChatDto chat, CancellationToken cancellationToken = default)
+        public async Task<ChatDto> AddChatAsync(AddChatDto chat, CancellationToken cancellationToken = default)
         {
             var chatEntity = chat.Adapt<Chat>();
-            await _repositoryManager.ChatRepository.AddChatAsync(chatEntity, cancellationToken);
+            chatEntity = await _repositoryManager.ChatRepository.AddChatAsync(chatEntity, cancellationToken);
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+            return chatEntity.Adapt<ChatDto>();
         }
 
-        public async Task<IEnumerable<ChatDto>> GetChatsAsync(CancellationToken cancellationToken = default)
-        {
-            var chats = await _repositoryManager.ChatRepository.GetChatsAsync(cancellationToken);
-            var chatsDto = chats.Adapt<IEnumerable<ChatDto>>();
-            return chatsDto;
-        }
-
-        public async Task AssignChat(ChatDto chat, CancellationToken cancellationToken = default)
+        public async Task<ChatDto> ChangeStatus(ChatDto chat, Contracts.Chat.ChatStatus chatStatus, Guid agentId, CancellationToken cancellationToken = default)
         {
             var chatEntity = chat.Adapt<Chat>();
-            await _repositoryManager.ChatRepository.AssignChat(chatEntity, cancellationToken);
+            var updatedEntity = await _repositoryManager.ChatRepository.ChangeStatus(chatEntity, (Domain.Entities.ChatStatus)chatStatus, agentId, cancellationToken);
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
+            return updatedEntity.Adapt<ChatDto>();
+        }
+
+        public async Task<IEnumerable<ChatDto>> GetActiveChatsAsync(CancellationToken cancellationToken = default)
+        {
+            var chats = await _repositoryManager.ChatRepository.GetActiveChatsAsync(cancellationToken);
+            return chats.Adapt<IEnumerable<ChatDto>>();
+        }
+
+        public async Task<ChatDto> GetChatById(Guid chatId, CancellationToken cancellationToken = default)
+        {
+            var chat = await _repositoryManager.ChatRepository.GetChatById(chatId, cancellationToken);
+            return chat.Adapt<ChatDto>();
+        }
+
+        public async Task UpdateLastPollDate(ChatDto chat, CancellationToken cancellationToken = default)
+        {
+            var chatEntity = chat.Adapt<Chat>();
+            await _repositoryManager.ChatRepository.UpdateLastPollDate(chatEntity, cancellationToken);
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

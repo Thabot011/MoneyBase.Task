@@ -6,6 +6,7 @@
         public ICollection<Chat> Chats { get; set; }
         public Team Team { get; set; }
         public Guid TeamId { get; set; }
+        public int MaxChats { get; set; }
     }
 
     public enum AgentType
