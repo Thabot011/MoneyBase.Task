@@ -1,0 +1,6 @@
+@MoneyBase.Task.Web_HostAddress = http://localhost:5262
+
+GET {{MoneyBase.Task.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
