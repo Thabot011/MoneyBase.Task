@@ -114,7 +114,7 @@ namespace MoneyBase.Persistence.Migrations
                 columns: new[] { "Id", "AgentType", "MaxChats", "TeamId" },
                 values: new object[,]
                 {
-                    { new Guid("1a44ed26-47e4-477b-8a03-bab0d8926311"), 1, 6, new Guid("33333333-3333-3333-3333-333333333333") },
+                    { new Guid("1a44ed26-47e4-477b-8a03-bab0d8926311"), 1, 6, new Guid("55555555-5555-5555-5555-555555555555") },
                     { new Guid("1ca1a930-a8af-4bff-b70c-d8dcb3375d39"), 2, 8, new Guid("33333333-3333-3333-3333-333333333333") },
                     { new Guid("2d99f557-8671-4eff-b461-c50871e16cc5"), 0, 4, new Guid("66666666-6666-6666-6666-666666666666") },
                     { new Guid("63fcef60-59c8-4d7c-bf65-6b66d3d414f3"), 0, 4, new Guid("66666666-6666-6666-6666-666666666666") },
@@ -126,6 +126,7 @@ namespace MoneyBase.Persistence.Migrations
                     { new Guid("a1dd117d-0c48-49ea-bf9c-109f5ca25705"), 1, 6, new Guid("33333333-3333-3333-3333-333333333333") },
                     { new Guid("b9595f82-3cf4-46d3-b7e8-e27946f3f396"), 0, 4, new Guid("66666666-6666-6666-6666-666666666666") },
                     { new Guid("bfd5bf77-839d-412f-a96d-191c05a63b45"), 1, 6, new Guid("11111111-1111-1111-1111-111111111111") },
+                    { new Guid("c3c192a8-4385-4bfd-8363-67c6b8bfc0df"), 1, 6, new Guid("55555555-5555-5555-5555-555555555555") },
                     { new Guid("d8f367c4-7c5d-4978-9132-28af793186d1"), 0, 4, new Guid("33333333-3333-3333-3333-333333333333") },
                     { new Guid("e5f8a12d-dc8d-48f8-a754-bf5d9eaf38ab"), 3, 5, new Guid("11111111-1111-1111-1111-111111111111") },
                     { new Guid("fb8ae7f6-d7e0-4b4f-9dcf-1724359ef47e"), 0, 4, new Guid("11111111-1111-1111-1111-111111111111") }

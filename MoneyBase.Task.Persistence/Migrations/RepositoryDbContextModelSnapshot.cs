@@ -133,7 +133,14 @@ namespace MoneyBase.Persistence.Migrations
                             Id = new Guid("1a44ed26-47e4-477b-8a03-bab0d8926311"),
                             AgentType = 1,
                             MaxChats = 6,
-                            TeamId = new Guid("33333333-3333-3333-3333-333333333333")
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
+                        },
+                        new
+                        {
+                            Id = new Guid("c3c192a8-4385-4bfd-8363-67c6b8bfc0df"),
+                            AgentType = 1,
+                            MaxChats = 6,
+                            TeamId = new Guid("55555555-5555-5555-5555-555555555555")
                         },
                         new
                         {

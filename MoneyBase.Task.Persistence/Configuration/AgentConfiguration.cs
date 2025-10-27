@@ -103,7 +103,14 @@ namespace MoneyBase.Persistence.Configuration
                 {
                     Id = Guid.Parse("1a44ed26-47e4-477b-8a03-bab0d8926311"),
                     AgentType = AgentType.MidLevel,
-                    TeamId = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                    TeamId = Guid.Parse("55555555-5555-5555-5555-555555555555"),
+                    MaxChats = 6
+                },
+                new Agent
+                {
+                    Id = Guid.Parse("c3c192a8-4385-4bfd-8363-67c6b8bfc0df"),
+                    AgentType = AgentType.MidLevel,
+                    TeamId = Guid.Parse("55555555-5555-5555-5555-555555555555"),
                     MaxChats = 6
                 },
                 new Agent
