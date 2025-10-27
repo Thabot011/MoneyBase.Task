@@ -1,5 +1,6 @@
 ﻿using MoneyBase.Contracts.Chat;
 using MoneyBase.Contracts.Team;
+using MoneyBase.Domain.Entities;
 using MoneyBase.Services.Abstractions;
 
 namespace MoneyBase.Services
@@ -17,24 +18,25 @@ namespace MoneyBase.Services
             var team = await _serviceManager.TeamService.GetTeamByShiftAsync(TimeOnly.FromDateTime(DateTime.UtcNow), cancellationToken);
             chat = await TryAssignChat(team, chat, cancellationToken);
 
-            if (chat.ChatStatus != ChatStatus.Assigned)
+            if (chat.ChatStatus != Contracts.Chat.ChatStatus.Assigned)
             {
                 var overflowTeam = await _serviceManager.TeamService.GetTeamByShiftAsync(Contracts.Shift.ShiftType.Overflow, cancellationToken);
                 chat = await TryAssignChat(overflowTeam, chat, cancellationToken);
             }
-            return chat.ChatStatus == ChatStatus.Assigned;
+            return chat.ChatStatus == Contracts.Chat.ChatStatus.Assigned;
         }
 
 
         private async Task<ChatDto> TryAssignChat(TeamDto team, ChatDto chat, CancellationToken cancellationToken)
         {
-            foreach (var agent in team.Agents.OrderBy(x => x.AgentType))
+            foreach (var agents in team.Agents.OrderBy(x => x.AgentType).GroupBy(x => x.AgentType))
             {
-                if (agent.Chats.Where(x=>x.ChatStatus!=ChatStatus.Inactive).Count() < agent.MaxChats)
+                var agentTobeAssigned = agents.OrderBy(x => x.Chats.Count).FirstOrDefault();
+                if (agentTobeAssigned.Chats.Where(x => x.ChatStatus != Contracts.Chat.ChatStatus.Inactive).Count() < agentTobeAssigned.MaxChats)
                 {
-                    chat = await _serviceManager.ChatService.ChangeStatus(chat, ChatStatus.Assigned, agent.Id, cancellationToken);
-                    break;
+                    chat = await _serviceManager.ChatService.ChangeStatus(chat, Contracts.Chat.ChatStatus.Assigned, agentTobeAssigned.Id, cancellationToken);
                 }
+                break;
             }
             return chat;
         }
